@@ -1,5 +1,8 @@
 package com.propify.challenge;
 
+import lombok.Data;
+
+@Data
 public class Address {
 
     public String street; // must not be null or blank

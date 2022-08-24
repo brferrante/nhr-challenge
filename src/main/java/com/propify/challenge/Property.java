@@ -1,5 +1,8 @@
 package com.propify.challenge;
 
+import lombok.Data;
+
+@Data
 public class Property {
 
     public int id; // must be null for INSERT and not null for UPDATE
