@@ -4,6 +4,7 @@ import com.propify.challenge.model.Property;
 import com.propify.challenge.model.PropertyReport;
 import com.propify.challenge.service.PropertyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -18,35 +19,38 @@ public class PropertyController {
     // API endpoints for CRUD operations on entities of type Property
 
     @GetMapping("/search")
-    public Collection<Property> search(@RequestParam ("minRentPrice") String minRentPrice,
+    public ResponseEntity<Collection<Property>> search(@RequestParam ("minRentPrice") String minRentPrice,
                                        @RequestParam ("maxRentPrice")String maxRentPrice) {
-        return propertyService.search(minRentPrice, maxRentPrice);
+        return ResponseEntity.ok(propertyService.search(minRentPrice, maxRentPrice));
     }
 
     @GetMapping("/{id}")
-    public Property findById(@PathVariable("id") int id) {
-        return propertyService.findById(id);
+    public ResponseEntity<Property> findById(@PathVariable("id") int id) {
+        return ResponseEntity.ok(propertyService.findById(id));
     }
 
     @PostMapping
-    public void insert(@RequestBody Property property) {
+    public ResponseEntity<Void> insert(@RequestBody Property property) {
         // TODO: Property attributes must be validated
         propertyService.insert(property);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public void update(@RequestBody Property property) {
+    public ResponseEntity<Void> update(@RequestBody Property property) {
         // TODO: Property attributes must be validated
         propertyService.update(property);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") int id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") int id) {
         propertyService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/report")
-    public PropertyReport report() {
-        return propertyService.propertyReport();
+    public ResponseEntity<PropertyReport> report() {
+        return ResponseEntity.ok(propertyService.propertyReport());
     }
 }
