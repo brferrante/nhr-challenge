@@ -1,22 +1,16 @@
 # backend-coding-challenge
 
-The goal of this challenge is to implement a REST API for Property entities, while improving the existing base code.
-Don't just focus on `.java` files, there could be things to improve or fix anywhere in the project.
 
-Please start by initializing a local Git repository and making an initial commit.
-Then take the time to skim through the code and add comments as you see fit before getting too deep into coding, this is
-a timed exercise, you may not be able to implement and/or fix everything, so a comment is better than nothing.
+**Test considerations:**
 
-Commit as often as possible. Don't worry about the commit messages, we mostly care about the time progression.
+There were a lot of things to change in the project. 
+This was my first approach to mybatis and I wasn't sure how the implementation for it worked
 
-Spin up MySQL 8.0:
-```commandline
-docker run -e "TZ=UTC" -e "MYSQL_ROOT_PASSWORD=secret" --name mysql -p 3306:3306 mysql:8.0.22
-```
+**Left to do:**
 
-Initilize the database:
-```commandline
-mvn flyway:migrate
-```
 
-If you are not familiar with Flyway migrations, the database seed is `src/main/resources/db/migration/V1__baseline.sql`.
+Mybatis mapper and queries were unfinished, lacked enough time to research and implement.
+The property validator is barely scaffolded, inside the different considerations for the endpoints would be applied
+Unit tests were left unfixed, given more time I would mock responses and test the DB schema.
+I would also add integration tests against the DB with test containers, API controller and service.
+Given more time also I would have added Swagger and dockerized the application and database based on profiles.
