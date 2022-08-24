@@ -9,9 +9,9 @@ public class PropertyReport {
 
     Integer totalQuantity;
 
-    Map<PropertyType, Integer> quantityPerType;
+    Map<PropertyType, Long> quantityPerType;
 
     double averageRentPrice;
 
-    Integer illinoisQuantity;
+    Long illinoisQuantity;
 }

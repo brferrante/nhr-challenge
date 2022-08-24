@@ -4,10 +4,13 @@ import com.propify.challenge.mapper.AddressMapper;
 import com.propify.challenge.mapper.PropertyMapper;
 import com.propify.challenge.model.Property;
 import com.propify.challenge.model.PropertyReport;
+import com.propify.challenge.model.States;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,16 +55,22 @@ public class PropertyService {
         var propertyReport = new PropertyReport();
 
         // Calculate total quantity
-        // propertyReport.totalQuantity =
+         propertyReport.setTotalQuantity( allProperties.size());
 
         // Calculate the quantity of each type, 0 if there is no properties.
-        // propertyReport.quantityPerType =
+
+        propertyReport.setQuantityPerType(
+                allProperties.stream()
+                        .collect(Collectors.groupingBy(Property::getType, Collectors.counting())));
 
         // Calculate the average rent price (exclude the properties without rent price or with rent price = 0)
-        // propertyReport.averageRentPrice =
+        propertyReport.setAverageRentPrice(allProperties.stream()
+                .filter(property -> (Objects.nonNull(property.getRentPrice())&& 0.00 < property.getRentPrice()))
+                .mapToDouble(Property::getRentPrice).average().orElse(0.00));
 
         // Calculate the quantity of properties in the state of Illinois (IL)
-        // propertyReport.illinoisQuantity =
+        propertyReport.setIllinoisQuantity(allProperties.stream()
+                .filter(property -> property.getAddress().state.equals(States.ILLINOIS.getStateCode())).count());
 
         return propertyReport;
     }
