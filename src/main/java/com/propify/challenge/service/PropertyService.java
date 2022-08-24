@@ -6,10 +6,16 @@ import com.propify.challenge.model.Property;
 import com.propify.challenge.model.PropertyReport;
 import com.propify.challenge.model.States;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,14 +46,11 @@ public class PropertyService {
         System.out.println("UPDATED: " + property.id);
     }
 
-    public void delete(int id) {
-        //TODO: Wrap in completableFuture to trigger the alert on completion
-        propertyMapper.delete(id);
-        System.out.println("DELETED: " + id);
-
-        alertService.sendPropertyDeletedAlert(id);
-        // TODO: Sending the alert should be non-blocking (asynchronous)
-        //  Extra points for only sending the alert when/if the transaction is committed
+    @SneakyThrows
+    public void delete(int id){
+        CompletableFuture<Void> future = CompletableFuture.runAsync(propertyMapper.delete(id))
+                .thenRun(()->  alertService.sendPropertyDeletedAlert(id));
+        future.thenRun( () -> System.out.println("DELETED: " + id)).get(300, TimeUnit.MILLISECONDS);
     }
 
     public PropertyReport propertyReport() {

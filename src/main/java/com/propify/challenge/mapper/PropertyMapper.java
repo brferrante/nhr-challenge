@@ -16,5 +16,5 @@ public interface PropertyMapper {
 
      void update(Property property);
 
-     void delete(Integer id);
+     Runnable delete(Integer id);
 }
