@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
 @RestController
-@RequestMapping("/property")
+@RequestMapping("/properties")
 @RequiredArgsConstructor
 public class PropertyController {
 
