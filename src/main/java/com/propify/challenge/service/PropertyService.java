@@ -4,16 +4,20 @@ import com.propify.challenge.mapper.AddressMapper;
 import com.propify.challenge.mapper.PropertyMapper;
 import com.propify.challenge.model.Property;
 import com.propify.challenge.model.PropertyReport;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+@Service
+@RequiredArgsConstructor
 public class PropertyService {
 
-    PropertyMapper propertyMapper;
+    private final PropertyMapper propertyMapper;
 
-    AddressMapper addressMapper;
+    private final AddressMapper addressMapper;
 
-    AlertService alertService;
+    private final AlertService alertService;
 
     public Collection<Property> search(String minRentPrice, String maxRentPrice) {
         return propertyMapper.search(minRentPrice, maxRentPrice);
@@ -34,6 +38,7 @@ public class PropertyService {
     }
 
     public void delete(int id) {
+        //TODO: Wrap in completableFuture to trigger the alert on completion
         propertyMapper.delete(id);
         System.out.println("DELETED: " + id);
 

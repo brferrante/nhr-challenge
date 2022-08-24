@@ -3,37 +3,49 @@ package com.propify.challenge.controller;
 import com.propify.challenge.model.Property;
 import com.propify.challenge.model.PropertyReport;
 import com.propify.challenge.service.PropertyService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+@RestController
+@RequestMapping("/property")
+@RequiredArgsConstructor
 public class PropertyController {
 
-    PropertyService propertyService;
+    private final PropertyService propertyService;
 
     // API endpoints for CRUD operations on entities of type Property
 
-    public Collection<Property> search(String minRentPrice, String maxRentPrice) {
+    @GetMapping("/search")
+    public Collection<Property> search(@RequestParam ("minRentPrice") String minRentPrice,
+                                       @RequestParam ("maxRentPrice")String maxRentPrice) {
         return propertyService.search(minRentPrice, maxRentPrice);
     }
 
-    public Property findById(int id) {
+    @GetMapping("/{id}")
+    public Property findById(@PathVariable("id") int id) {
         return propertyService.findById(id);
     }
 
-    public void insert(Property property) {
+    @PostMapping
+    public void insert(@RequestBody Property property) {
         // TODO: Property attributes must be validated
         propertyService.insert(property);
     }
 
-    public void update(Property property) {
+    @PutMapping
+    public void update(@RequestBody Property property) {
         // TODO: Property attributes must be validated
         propertyService.update(property);
     }
 
-    public void delete(int id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") int id) {
         propertyService.delete(id);
     }
 
+    @GetMapping("/report")
     public PropertyReport report() {
         return propertyService.propertyReport();
     }
