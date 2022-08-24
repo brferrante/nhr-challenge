@@ -20,6 +20,10 @@ class PropertyControllerTest {
         this.mockMvc.perform(get("/properties")).andExpect(status().isOk());
         // TODO: add assertions
     }
-
+    @Test
+    public void testGetById() throws Exception {
+        this.mockMvc.perform(get("/1")).andExpect(status().isOk());
+        // TODO: add assertions
+    }
     // TODO: add tests for other API methods
 }
