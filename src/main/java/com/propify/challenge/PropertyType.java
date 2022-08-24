@@ -1,15 +1,17 @@
 package com.propify.challenge;
 
-public class PropertyType {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    public static final PropertyType SINGLE_FAMILY = new PropertyType("Single Family");
-    public static final PropertyType MULTI_FAMILY = new PropertyType("Multi-family");
-    public static final PropertyType CONDOMINIUM = new PropertyType("Condominium");
-    public static final PropertyType TOWNHOUSE = new PropertyType("Townhouse");
+@Getter
+@RequiredArgsConstructor
+public enum PropertyType {
 
-    public String type;
+    SINGLE_FAMILY("Single Family"),
+    MULTI_FAMILY("Multi-family"),
+    CONDOMINIUM("Condominium"),
+    TOWNHOUSE("Townhouse");
 
-    public PropertyType(String type) {
-        this.type = type;
-    }
+    private final String type;
+
 }
